@@ -13,6 +13,7 @@
     "express": "^4.17.1"
   },
   "dependencies": {
-    "mongoose": "^5.11.13"
+    "mongoose": "^5.11.13",
+    "url": "^0.11.0"
   }
 }

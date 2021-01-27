@@ -7,7 +7,7 @@ services:
   ports:
       - "3000:3000"
   reviews_api:
-    container_name: reviews_api
+    container_name: server_api
     environment:
       db_name=SDC
       db_service_name=reviews_db
