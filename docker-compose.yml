@@ -1,0 +1,16 @@
+
+services:
+  mongo:
+    container_name: reviews_db
+    image: mongo:latest
+    restart: always
+  ports:
+      - "3000:3000"
+  reviews_api:
+    container_name: reviews_api
+    environment:
+      db_name=SDC
+      db_service_name=reviews_db
+    port:
+      - "8000:8000"
+
