@@ -1,7 +1,11 @@
-const mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    autoIncrement = require('mongoose-auto-increment');
+
+
 
 const reviewSchema = new mongoose.Schema({
-  review_id: Number,
+  id: Number,
   rating: Number,
   summary: String,
   recommend: Boolean,
@@ -30,5 +34,3 @@ const characteristicSchema = new mongoose.Schema({
 });
 
 module.exports.charsMetaModel = mongoose.model('chars_and_ratings', characteristicSchema);
-
-// module.exports.allRatingsModel = mongoose.model('reviews_and_photos', allRatingsSchema);

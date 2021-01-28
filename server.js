@@ -7,7 +7,7 @@ const morgan = require('morgan');
 let dbUrl = 'http://localhost:27017';
 let serverUrl = 'http://localhost:8000';
 
-let { getReviews, getMeta } = require('./App/reviews.js');
+let { getReviews, getMeta } = require('./App/getReviews.js');
 
 // env vars
 dotenv.config({ path: './config/config.env' });

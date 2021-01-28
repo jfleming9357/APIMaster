@@ -1,5 +1,5 @@
-const asyncHandler = require('../middleware/async');
-const Product = require('../products/models/Product');
+const asyncHandler = require('../../middleware/asyncHandler.js');
+const Product = require('../models/products.js');
 
 // @desc      Get products
 // @route     GET /products
