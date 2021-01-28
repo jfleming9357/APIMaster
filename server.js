@@ -1,20 +1,59 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const port = 3001;
+let express = require('express');
+let app = express();
+let { getReviews } = require('./App/reviews.js');
 
-const app = express();
-mongoose.connect(
-  'mongodb://localhost:27017',
-  { useNewUrlParser: true}
-)
-.then(() => console.log('connected to db'))
-.catch((err) => console.log(err))
+let dbUrl = 'http://localhost:27017';
+let serverUrl = 'http://localhost:8000';
 
-app.get('/', (req, res) => {
-  res.send('Hello from api');
-});
+//product endpoints
 
 
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
-});
+
+
+
+//reviews endpoints
+
+app.get('/reviews/', (req, res) => {
+  let page, count, sort, product_id;
+  page = req.query.page || 1;
+  count = req.query.count || 5;
+  sort = req.query.sort;
+  product_id = req.query.product_id;
+  getReviews(product_id, page, count, sort, (err, data) => {
+    if (err) {
+      res.status(400).send('error getting data from db')
+    } else {
+      let obj = {
+        product: product_id,
+        page: page,
+        count: count,
+        results: data
+      }
+      res.send(obj);
+    }
+
+  })
+})
+
+app.get('/reviews/meta', (req, res) => {
+
+})
+
+app.post('/reviews', (req, res) => {
+
+})
+
+app.put('/reviews/:review_id/helpful', (req, res) => {
+
+})
+
+app.put('/reviews/:review_id/report', (req, res) => {
+
+})
+
+
+
+
+app.listen(3000, () => {
+  console.log(`listening on ${3000}`);
+})
