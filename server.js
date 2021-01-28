@@ -14,19 +14,14 @@ let serverUrl = 'http://localhost:8000';
 //reviews endpoints
 
 app.get('/reviews/', (req, res) => {
-  let page, count, sort, product_id;
-  page = req.query.page || 1;
-  count = req.query.count || 5;
-  sort = req.query.sort;
-  product_id = req.query.product_id;
-  getReviews(product_id, page, count, sort, (err, data) => {
+  getReviews(req.query, (err, data) => {
     if (err) {
       res.status(400).send('error getting data from db')
     } else {
       let obj = {
-        product: product_id,
-        page: page,
-        count: count,
+        product: req.query.product_id,
+        page: req.query.page,
+        count: req.query.count,
         results: data
       }
       res.send(obj);

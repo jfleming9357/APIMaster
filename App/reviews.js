@@ -10,8 +10,8 @@ mongoose.connect(
 
 
 
-module.exports.getReviews = function (product_id, page, count, sort,callback) {
-  reviewsModel.find({"product_id": product_id}, (err, arr) => {
+module.exports.getReviews = function (query, callback) {
+  reviewsModel.find({"product_id": query.product_id}, (err, arr) => {
     if (err) {
       callback(err, null)
     } else {
