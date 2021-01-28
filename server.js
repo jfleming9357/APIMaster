@@ -3,11 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+let { getReviews, getMeta } = require('./App/getReviews.js');
 
 let dbUrl = 'http://localhost:27017';
 let serverUrl = 'http://localhost:8000';
-
-let { getReviews, getMeta } = require('./App/reviews.js');
 
 // env vars
 dotenv.config({ path: './config/config.env' });
@@ -16,12 +15,12 @@ dotenv.config({ path: './config/config.env' });
 const productsRoutes = require('./products/routes/products');
 // const reviews = require('./reviews/routes/reviews');
 
+const app = express();
+
 // Morgan dev logging info middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-
-const app = express();
 
 app.get('/', (req, res) => {
   res.send('Hello from api');

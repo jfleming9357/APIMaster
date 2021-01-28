@@ -1,35 +1,41 @@
-const asyncHandler = require('../middleware/async');
-const Product = require('../products/models/product');
+const mongoose = require('mongoose');
+const asyncHandler = require('../../middleware/asyncHandler.js');
+const Product = require('../models/products.js');
 
-const db = async () => {
-  const conn = await mongoose.connect('mongodb://localhost:27017/sdc2', {
+mongoose
+  .connect('mongodb://localhost:27017/sdc2', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
     useUnifiedTopology: true
-  });
-
-  console.log(`MongoDB Connected: ${conn.connection.host}`);
-};
+  })
+  .then(() => console.log(`MongoDB Connected`))
+  .catch((err) => console.log(err));
 
 // @desc      Get products
 // @route     GET /products
-// @route     GET /products/:product_id
 // @access    Public
 exports.getProducts = asyncHandler(async (req, res, next) => {
-  if (req.params.productId) {
-    const products = await Product.find({ productId: req.params.productId });
+  const count = await Product.countDocuments();
+
+  return res.status(200).json({
+    success: true,
+    count
+  });
+});
+
+// @desc      Get products
+// @route     GET /products/:id
+// @access    Public
+exports.getProduct = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  console.log('ID: ', id);
+  if (req.params) {
+    const product = await Product.find({ id });
 
     return res.status(200).json({
       success: true,
-      count: products.length,
-      data: products
+      data: product
     });
-  } else {
-    const products = await Product.find();
-
-    res
-      .status(200)
-      .json({ success: true, count: products.length, data: products });
   }
 });
