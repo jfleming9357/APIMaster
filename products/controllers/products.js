@@ -1,5 +1,16 @@
 const asyncHandler = require('../middleware/async');
-const Product = require('../products/models/Product');
+const Product = require('../products/models/product');
+
+const db = async () => {
+  const conn = await mongoose.connect('mongodb://localhost:27017/sdc2', {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true
+  });
+
+  console.log(`MongoDB Connected: ${conn.connection.host}`);
+};
 
 // @desc      Get products
 // @route     GET /products

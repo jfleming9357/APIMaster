@@ -13,7 +13,7 @@ let { getReviews, getMeta } = require('./App/reviews.js');
 dotenv.config({ path: './config/config.env' });
 
 // Routes
-const products = require('./products/routes/products');
+const productsRoutes = require('./products/routes/products');
 // const reviews = require('./reviews/routes/reviews');
 
 // Morgan dev logging info middleware
@@ -61,7 +61,7 @@ app.put('/reviews/:review_id/helpful', (req, res) => {});
 app.put('/reviews/:review_id/report', (req, res) => {});
 
 // Mount routers
-app.use('/products', products);
+app.use('/products', productsRoutes);
 // app.use('/reviews', reviews);
 
 const PORT = process.env.PORT || 3001;
