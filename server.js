@@ -1,6 +1,6 @@
 let express = require('express');
 let app = express();
-let { getReviews, getMeta } = require('./App/reviews.js');
+let { getReviews, getMeta } = require('./App/getReviews.js');
 
 let dbUrl = 'http://localhost:27017';
 let serverUrl = 'http://localhost:8000';

@@ -15,6 +15,12 @@ module.exports.getReviews = function (query, callback) {
     if (err) {
       callback(err, null)
     } else {
+      for (let x = 0; x < arr.length; x++) {
+        arr[x].review_id =  arr[x].id;
+        delete arr[x].id;
+        console.log(arr[x]);
+      }
+      // console.log(arr);
       callback(null, arr);
     }
   });
