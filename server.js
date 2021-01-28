@@ -1,6 +1,6 @@
 let express = require('express');
 let app = express();
-let { getReviews } = require('./App/reviews.js');
+let { getReviews, getMeta } = require('./App/reviews.js');
 
 let dbUrl = 'http://localhost:27017';
 let serverUrl = 'http://localhost:8000';
@@ -36,7 +36,13 @@ app.get('/reviews/', (req, res) => {
 })
 
 app.get('/reviews/meta', (req, res) => {
-
+  getMeta(req.query.product_id, (err, data) => {
+    if (err) {
+      res.status(400).send('error getting metadata from db');
+    } else {
+      res.send(data);
+    }
+  })
 })
 
 app.post('/reviews', (req, res) => {
