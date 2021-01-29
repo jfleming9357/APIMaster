@@ -8,6 +8,7 @@ let dbUrl = 'http://localhost:27017';
 let serverUrl = 'http://localhost:8000';
 
 let { getReviews, getMeta } = require('./App/getReviews.js');
+let { postReview } = require('./App/postReviews.js');
 
 // env vars
 dotenv.config({ path: './config/config.env' });
@@ -54,7 +55,10 @@ app.get('/reviews/meta', (req, res) => {
   });
 });
 
-app.post('/reviews', (req, res) => {});
+app.post('/reviews', (req, res) => {
+  postReview(req.query);
+  res.send();
+});
 
 app.put('/reviews/:review_id/helpful', (req, res) => {});
 

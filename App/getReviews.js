@@ -8,19 +8,11 @@ mongoose.connect(
 .then(() => console.log('connected to db'))
 .catch((err) => console.log(err));
 
-
-
 module.exports.getReviews = function (query, callback) {
   reviewsModel.find({"product_id": query.product_id}, (err, arr) => {
     if (err) {
       callback(err, null)
     } else {
-      for (let x = 0; x < arr.length; x++) {
-        arr[x].review_id =  arr[x].id;
-        delete arr[x].id;
-        console.log(arr[x]);
-      }
-      // console.log(arr);
       callback(null, arr);
     }
   });
