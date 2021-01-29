@@ -7,11 +7,9 @@ const {
 
 module.exports.addHelpful = function (review_id, callback) {
   reviewsModel.update({ review_id: review_id.toString()}, { $inc : { helpfulness : 1 }}, (err, res) => {
-    if (err) {
-      console.log(err);
+    if (err || res.n === 0) {
       callback(true)
     } else {
-      console.log(res);
       callback(false);
     }
   });
@@ -19,10 +17,9 @@ module.exports.addHelpful = function (review_id, callback) {
 
 module.exports.addReport = function (review_id, callback) {
   reviewsModel.update({ review_id: review_id.toString()}, { $inc : { reported: 1 }}, (err, res) => {
-    if (err) {
+    if (err || res.n === 0) {
       callback(true)
     } else {
-      console.log(res);
       callback(false);
     }
   });

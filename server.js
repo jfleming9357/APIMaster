@@ -36,13 +36,7 @@ app.get('/reviews/', (req, res) => {
     if (err) {
       res.status(400).send('error getting data from db');
     } else {
-      let obj = {
-        product: req.query.product_id,
-        page: req.query.page,
-        count: req.query.count,
-        results: data
-      };
-      res.status(200).send(obj);
+      res.status(200).send(data);
     }
   });
 });
@@ -78,9 +72,9 @@ app.put('/reviews/:review_id/helpful', (req, res) => {
 });
 
 app.put('/reviews/:review_id/report', (req, res) => {
-addHelpful(req.params.review_id, (err, data) => {
+addReport(req.params.review_id, (err, data) => {
   if (err) {
-    res.status(400).send('error reporting')
+    res.status(400).send('error reporting');
   } else {
     res.status(204).send('NO CONTENT');
   }

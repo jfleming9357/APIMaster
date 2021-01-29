@@ -4,6 +4,10 @@ const { reviewsModel, charsMetaModel } = require('./models.js');
 
 module.exports.postReview = function (query, callback) {
   let count;
+  if (!query.product_id || !query.rating || !query.summary || !query.recommend || !query.name || !query.email || !query.characteristics) {
+    callback(false);
+    return;
+  }
   reviewsModel.find().count((err, res) => {
     count = parseInt(res);
   if (!query.photos) {
@@ -19,6 +23,9 @@ module.exports.postReview = function (query, callback) {
       url: photoArray[x]
     })
   }
+
+  let date = new Date().toISOString();
+
   reviewsModel.create({
     review_id: (count + 1).toString(),
     product_id: query.product_id.toString(),
@@ -30,7 +37,8 @@ module.exports.postReview = function (query, callback) {
     reviewer_email: query.email,
     photos: photos,
     helpfulness: 0,
-    reported: 0
+    reported: 0,
+    date: date
   }, (err, res) => {
     if (err) {
       callback(false);
