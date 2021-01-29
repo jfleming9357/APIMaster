@@ -18,18 +18,26 @@ mongoose
 // @access    Public
 exports.getProducts = asyncHandler(async (req, res, next) => {
   // Pagination
-  const page = parseInt(req.params.page, 10) || 1;
+  const page = parseInt(req.query.page, 10) || 1;
   const count = parseInt(req.query.count, 10) || 5;
   const startIndex = (page - 1) * count;
   const endIndex = page * count;
   const total = await Product.countDocuments();
 
-  const products = Product.find({ id: { $lte: endIndex } })
-    .limit(count)
-    .sort(id);
+  const products = await Product.find({ id: { $gte: startIndex } }).limit(
+    count
+  );
+
+  products.forEach(
+    (product) =>
+      (product.related = product.related.map((related_id) =>
+        Number(related_id)
+      ))
+  );
 
   return res.status(200).json({
     success: true,
+    count: products.length,
     data: products
   });
 });
