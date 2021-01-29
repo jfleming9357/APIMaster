@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const { reviewsModel, charsMetaModel, allRatingsModel } = require('./models.js');
+const connectDB = require('../config/db');
+const {
+  reviewsModel,
+  charsMetaModel,
+  allRatingsModel
+} = require('./models.js');
 
-mongoose.connect(
-  'mongodb://localhost:27017/sdc_merged',
-  { useNewUrlParser: true, useUnifiedTopology: true}
-)
-.then(() => console.log('connected to db'))
-.catch((err) => console.log(err));
+connectDB('sdc_merged');
 
 module.exports.getReviews = function (query, callback) {
   reviewsModel.find({ product_id: query.product_id }, (err, arr) => {
