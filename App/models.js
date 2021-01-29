@@ -33,11 +33,12 @@ const reviewSchema = new mongoose.Schema({
 module.exports.reviewsModel = mongoose.model('reviews_and_photos', reviewSchema);
 
 const characteristicSchema = new mongoose.Schema({
-  id: Number,
+  id: String,
   name: String,
+  product_id: String,
   char_ratings: [{
-    value: Number,
-    characteristic_id: Number
+    value: String,
+    characteristic_id: String
   }]
 });
 

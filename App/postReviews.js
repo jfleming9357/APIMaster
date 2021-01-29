@@ -6,9 +6,6 @@ module.exports.postReview = function (query, callback) {
   let count;
   reviewsModel.find().count((err, res) => {
     count = parseInt(res);
-    console.log(count);
-
-
   if (!query.photos) {
     query.photos = [];
   }
@@ -35,9 +32,12 @@ module.exports.postReview = function (query, callback) {
     helpfulness: 0,
     reported: 0
   }, (err, res) => {
-    // console.log(err);
-    // console.log('added to reviews with review_id of ', count + 1);
-    // console.log(res);
+    if (err) {
+      callback(false);
+    } else {
+      callback(true);
+    }
+
   });
 });
 
@@ -49,15 +49,15 @@ module.exports.postReview = function (query, callback) {
   let existing;
   charsMetaModel.find({
     product_id: query.product_id
+
   }, (err, data) => {
     existing = data;
     let insert = [];
-    console.log(existing);
-    console.log(count);
+    let chars = [];
+
     query.characteristics = query.characteristics.replace(/'/g, '"');
     query.characteristics = JSON.parse(query.characteristics);
-    let chars = [];
-    let x = count + 1;
+
     for (let key in query.characteristics) {
       key = parseInt(key);
       let obj = {};
@@ -65,15 +65,11 @@ module.exports.postReview = function (query, callback) {
       count++;
       obj.value = query.characteristics[key];
       for (let x = 0; x < existing.length; x++) {
-        console.log(existing[x].id);
-        if (key === existing[x].id) {
-          console.log('added');
+        if (key.toString() === existing[x].id) {
           existing[x].char_ratings.push(obj);
           found = true;
-          charsMetaModel.replaceOne({"id": existing[x].id.toString()}, existing[x], null, (err, res) => {
-            console.log(err);
-            console.log(res);
-          });
+          let newId = JSON.stringify(existing[x].id);
+          charsMetaModel.replaceOne({ id: existing[x].id}, existing[x]);
         }
       }
     }
