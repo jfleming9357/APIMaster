@@ -1,17 +1,10 @@
 const mongoose = require('mongoose');
+const connectDB = require('../../config/db');
 const db = mongoose.connection;
 const asyncHandler = require('../../middleware/asyncHandler.js');
 const Product = require('../models/products.js');
 
-mongoose
-  .connect('mongodb://localhost:27017/sdc2', {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log(`MongoDB Connected`))
-  .catch((err) => console.log(err));
+// connectDB('sdc2');
 
 // @desc      Get products
 // @route     GET /products
