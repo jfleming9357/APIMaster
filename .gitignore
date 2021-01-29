@@ -104,3 +104,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Local Util files
+mongo_import.sh
+mongo_import_test_files.sh
+mongo_speed_sandbox.sh
+
+# Temporary Local Files
+scratch.js
+mongo_log.txt
