@@ -1,22 +1,24 @@
 const mongoose = require('mongoose');
-const { reviewsModel, charsMetaModel, allRatingsModel } = require('./models.js');
+const {
+  reviewsModel,
+  charsMetaModel,
+  allRatingsModel
+} = require('./models.js');
 
-mongoose.connect(
-  'mongodb://localhost:27017/sdc_merged',
-  { useNewUrlParser: true, useUnifiedTopology: true}
-)
-.then(() => console.log('connected to db'))
-.catch((err) => console.log(err));
-
-
+// mongoose.connect(
+//   'mongodb://localhost:27017/sdc_merged',
+//   { useNewUrlParser: true, useUnifiedTopology: true}
+// )
+// .then(() => console.log('connected to db'))
+// .catch((err) => console.log(err));
 
 module.exports.getReviews = function (query, callback) {
-  reviewsModel.find({"product_id": query.product_id}, (err, arr) => {
+  reviewsModel.find({ product_id: query.product_id }, (err, arr) => {
     if (err) {
-      callback(err, null)
+      callback(err, null);
     } else {
       for (let x = 0; x < arr.length; x++) {
-        arr[x].review_id =  arr[x].id;
+        arr[x].review_id = arr[x].id;
         delete arr[x].id;
         console.log(arr[x]);
       }
@@ -24,13 +26,13 @@ module.exports.getReviews = function (query, callback) {
       callback(null, arr);
     }
   });
-}
+};
 
 module.exports.getMeta = function (product_id, callback) {
   let chars;
-  charsMetaModel.find({"product_id": product_id}, (err, arr) => {
+  charsMetaModel.find({ product_id: product_id }, (err, arr) => {
     if (err) {
-      callback(err, null)
+      callback(err, null);
       return;
     } else {
       let char_obj = {};
@@ -43,13 +45,12 @@ module.exports.getMeta = function (product_id, callback) {
         }
         let average = (total / numberRatings).toFixed(1);
         char_obj[arr[x].name] = {
-            id: arr[x].char_ratings[0].characteristic_id,
-            value: average
-        }
-
+          id: arr[x].char_ratings[0].characteristic_id,
+          value: average
+        };
       }
       chars = char_obj;
-      reviewsModel.find({"product_id": product_id}, (err, arr) => {
+      reviewsModel.find({ product_id: product_id }, (err, arr) => {
         if (err) {
           callback(err);
           return;
@@ -58,10 +59,12 @@ module.exports.getMeta = function (product_id, callback) {
           let recommend = {
             0: 0,
             1: 0
-          }
+          };
           for (let x = 0; x < arr.length; x++) {
-            let currRating = arr[x].rating
-            ratings[currRating] ? ratings[currRating]++ : ratings[currRating] = 1;
+            let currRating = arr[x].rating;
+            ratings[currRating]
+              ? ratings[currRating]++
+              : (ratings[currRating] = 1);
             arr[x].recommend ? recommend[1]++ : recommend[0]++;
           }
           let returnObject = {
@@ -69,11 +72,10 @@ module.exports.getMeta = function (product_id, callback) {
             ratings: ratings,
             recommend: recommend,
             characteristics: chars
-          }
+          };
           callback(null, returnObject);
         }
       });
     }
   });
-
-}
+};
