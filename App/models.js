@@ -27,7 +27,8 @@ const reviewSchema = new mongoose.Schema({
   },
   helpfulness: Number,
   photos: [{ id: Number, url: String }],
-  product_id: String
+  product_id: String,
+  reported: Number
 });
 
 module.exports.reviewsModel = mongoose.model('reviews_and_photos', reviewSchema);

@@ -68,7 +68,7 @@ app.post('/reviews', (req, res) => {
 });
 
 app.put('/reviews/:review_id/helpful', (req, res) => {
-  addHelpful(req.query.product_id, (err, data) => {
+  addHelpful(req.params.review_id, (err, data) => {
     if (err) {
       res.status(400).send('error setting helpful')
     } else {
@@ -78,7 +78,7 @@ app.put('/reviews/:review_id/helpful', (req, res) => {
 });
 
 app.put('/reviews/:review_id/report', (req, res) => {
-addHelpful(req.query.product_id, (err, data) => {
+addHelpful(req.params.review_id, (err, data) => {
   if (err) {
     res.status(400).send('error reporting')
   } else {
