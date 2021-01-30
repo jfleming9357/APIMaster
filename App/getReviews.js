@@ -11,7 +11,7 @@ connectDB('sdc_merged');
 
 module.exports.getReviews = function ({ product_id, page = 1, count = 5, sort = 'relevance'}, callback) {
   reviewsModel.find({ product_id: product_id }, (err, arr) => {
-    if (err || arr.length === 0) {
+    if (err) {
       callback(true, null);
     } else {
       arr = modifyReviews(arr, page, count, sort);
@@ -44,12 +44,21 @@ module.exports.getMeta = function (product_id, callback) {
         let total = 0;
         let numberRatings = 0;
         for (let y = 0; y < arr[x].char_ratings.length; y++) {
-          total += arr[x].char_ratings[y].value;
+          total += parseInt(arr[x].char_ratings[y].value);
           numberRatings++;
         }
+        if (numberRatings === 0) {
+          numberRatings = 1;
+        }
         let average = (total / numberRatings).toFixed(1);
+        let id;
+        if (arr[x].char_ratings.length) {
+          id = arr[x].char_ratings[0].characteristic_id
+        } else {
+          id = '';
+        }
         char_obj[arr[x].name] = {
-          id: arr[x].char_ratings[0].characteristic_id,
+          id: id,
           value: average
         };
       }

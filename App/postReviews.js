@@ -15,8 +15,8 @@ module.exports.postReview = function (query, callback) {
   }
   let photos = [];
   let photoArray = query.photos;
-  photoArray = photoArray.replace(/'/g, '"');
-  photoArray = JSON.parse(photoArray);
+  // photoArray = photoArray.replace(/'/g, '"');
+  // photoArray = JSON.parse(photoArray);
   for (let x = 0; x < photoArray.length; x++) {
     photos.push({
       id: x,
@@ -63,8 +63,8 @@ module.exports.postReview = function (query, callback) {
     let insert = [];
     let chars = [];
 
-    query.characteristics = query.characteristics.replace(/'/g, '"');
-    query.characteristics = JSON.parse(query.characteristics);
+    // query.characteristics = query.characteristics.replace(/'/g, '"');
+    // query.characteristics = JSON.parse(query.characteristics);
 
     for (let key in query.characteristics) {
       key = parseInt(key);
