@@ -1,35 +1,45 @@
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    autoIncrement = require('mongoose-auto-increment');
-
-
+var mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
-  id: Number,
-  rating: Number,
+  review_id: String,
+  rating:{
+    type: String,
+    required: [true, 'Please add a rating to your review']
+  },
   summary: String,
-  recommend: Boolean,
+  recommend: {
+    type: Boolean,
+    required: [true, 'Please select an option for product recommendation']
+  },
   response: String,
-  body: String,
+  body: {
+    type: String,
+    required: [true, 'Please add a body to your review']
+  },
   date: String,
-  reviewer_name: String,
+  reviewer_name: {
+    type: String,
+    required: [true, 'Please add a name to your review']
+  },
+  reviewer_email: {
+    type: String,
+    required: [true, 'Please add an email to your review']
+  },
   helpfulness: Number,
   photos: [{ id: Number, url: String }],
+  product_id: String,
+  reported: Number
 });
 
 module.exports.reviewsModel = mongoose.model('reviews_and_photos', reviewSchema);
 
-const allRatingsSchema = new mongoose.Schema({
-  rating: Number,
-  recommend: Boolean,
-});
-
 const characteristicSchema = new mongoose.Schema({
-  id: Number,
+  id: String,
   name: String,
+  product_id: String,
   char_ratings: [{
-    value: Number,
-    characteristic_id: Number
+    value: String,
+    characteristic_id: String
   }]
 });
 

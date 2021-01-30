@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const connectDB = require('../config/db');
+const { modifyReviews } = require('./modifyReviews.js');
 const {
   reviewsModel,
   charsMetaModel,
@@ -8,18 +9,25 @@ const {
 
 connectDB('sdc_merged');
 
-module.exports.getReviews = function (query, callback) {
-  reviewsModel.find({ product_id: query.product_id }, (err, arr) => {
-    if (err) {
-      callback(err, null);
+module.exports.getReviews = function ({ product_id, page = 1, count = 5, sort = 'relevance'}, callback) {
+  reviewsModel.find({ product_id: product_id }, (err, arr) => {
+    if (err || arr.length === 0) {
+      callback(true, null);
     } else {
+      arr = modifyReviews(arr, page, count, sort);
+      let nonreported = [];
       for (let x = 0; x < arr.length; x++) {
-        arr[x].review_id = arr[x].id;
-        delete arr[x].id;
-        console.log(arr[x]);
+        if (!arr[x].reported) {
+          nonreported.push(arr[x]);
+        }
       }
-      // console.log(arr);
-      callback(null, arr);
+      let obj = {
+        product: product_id,
+        page: page,
+        count: count,
+        results: nonreported
+      };
+      callback(null, obj);
     }
   });
 };
@@ -27,8 +35,8 @@ module.exports.getReviews = function (query, callback) {
 module.exports.getMeta = function (product_id, callback) {
   let chars;
   charsMetaModel.find({ product_id: product_id }, (err, arr) => {
-    if (err) {
-      callback(err, null);
+    if (err || arr.length === 0) {
+      callback(true, null);
       return;
     } else {
       let char_obj = {};
