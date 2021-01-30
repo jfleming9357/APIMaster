@@ -1,16 +1,16 @@
-
+version: "3.3"
 services:
+  web:
+    build: .
+    ports:
+    - "3001:3001"
+    depends_on:
+    - mongo
   mongo:
-    container_name: reviews_db
-    image: mongo:latest
+    image: mongo
     restart: always
-  ports:
-      - "3000:3000"
-  reviews_api:
-    container_name: server_api
-    environment:
-      db_name=SDC
-      db_service_name=reviews_db
-    port:
-      - "8000:8000"
-
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
