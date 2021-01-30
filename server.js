@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
-
+const bodyParser = require('body-parser');
 
 let dbUrl = 'http://localhost:27017';
 let serverUrl = 'http://localhost:8000';
@@ -20,7 +20,7 @@ const productsRoutes = require('./products/routes/products');
 // const reviews = require('./reviews/routes/reviews');
 
 const app = express();
-
+app.use(bodyParser.json())
 // Morgan dev logging info middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -52,7 +52,10 @@ app.get('/reviews/meta', (req, res) => {
 });
 
 app.post('/reviews', (req, res) => {
-  postReview(req.query, (response) => {
+  let query;
+  !req.query.product_id ? query = req.body : query = req.query;
+  console.log(query);
+  postReview(query, (response) => {
     if (!response) {
       res.status(400).send('error posting to database');
     } else {
@@ -85,7 +88,7 @@ addReport(req.params.review_id, (err, data) => {
 app.use('/products', productsRoutes);
 // app.use('/reviews', reviews);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
