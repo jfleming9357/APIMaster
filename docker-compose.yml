@@ -3,15 +3,17 @@ services:
   web:
     image: jfleming9357/sdc2:latest
     ports:
-        - "8080:8080"
+    - "8080:8080"
     depends_on:
     - mongo
   mongo:
     image: mongo
     ports:
-      - 27018:27017
+      - 27017:27017
     restart: always
     volumes:
        - data-docker:/data/
 volumes:
   data-docker:
+
+

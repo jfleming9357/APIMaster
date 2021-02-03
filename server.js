@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-
+require('newrelic');
 let dbUrl = 'http://localhost:27017';
 let serverUrl = 'http://localhost:8000';
 
@@ -87,7 +87,7 @@ addReport(req.params.review_id, (err, data) => {
 app.use('/products', productsRoutes);
 // app.use('/reviews', reviews);
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
