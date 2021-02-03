@@ -1,7 +1,7 @@
-version: "2.2"
+version: "3.7"
 services:
-  api_server:
-    build: .
+  web:
+    image: jfleming9357/sdc:latest
     ports:
     - "8080:8080"
     depends_on:
@@ -9,9 +9,11 @@ services:
   mongo:
     image: mongo
     ports:
-      - "27017:27017"
+      - 27017:27017
     restart: always
     volumes:
-      - data-docker:/data/db
-  volumes:
-    data-docker:
+       - data-docker:/data/
+volumes:
+  data-docker:
+
+
