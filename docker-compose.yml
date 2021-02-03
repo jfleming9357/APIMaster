@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   web:
-    image: jfleming9357/sdc:latest
+    image: jfleming9357/sdc2:latest
     ports:
         - "8080:8080"
     depends_on:
