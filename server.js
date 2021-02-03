@@ -54,7 +54,6 @@ app.get('/reviews/meta', (req, res) => {
 app.post('/reviews', (req, res) => {
   let query;
   !req.query.product_id ? query = req.body : query = req.query;
-  console.log(query);
   postReview(query, (response) => {
     if (!response) {
       res.status(400).send('error posting to database');
