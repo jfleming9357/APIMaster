@@ -7,6 +7,7 @@ const {
   allRatingsModel
 } = require('./models.js');
 
+
 connectDB('sdc_merged');
 
 module.exports.getReviews = function ({ product_id, page = 1, count = 5, sort = 'relevance'}, callback) {
