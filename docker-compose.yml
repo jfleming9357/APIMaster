@@ -1,16 +1,17 @@
-version: "3.3"
+version: "2.2"
 services:
   web:
     build: .
     ports:
-    - "3001:3001"
+        - "8080:8080"
     depends_on:
     - mongo
   mongo:
-    image: mongo
-    restart: always
-  mongo-express:
-    image: mongo-express
-    restart: always
+    image: mongo 
     ports:
-      - 8081:8081
+      - "27017:27017"
+    restart: always
+    cpus: "0.5"
+    mem_limit: 750m
+    volumes:
+            - data-docker 

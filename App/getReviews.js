@@ -12,7 +12,8 @@ connectDB('sdc_merged');
 module.exports.getReviews = function ({ product_id, page = 1, count = 5, sort = 'relevance'}, callback) {
   reviewsModel.find({ product_id: product_id }, (err, arr) => {
     if (err) {
-      callback(true, null);
+	console.log(err);	    
+      callback(err, null);
     } else {
       arr = modifyReviews(arr, page, count, sort);
       let nonreported = [];

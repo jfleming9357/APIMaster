@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async (db) => {
   try {
-    const conn = await mongoose.connect(`mongodb://localhost:27017/${db}`, {
+    const conn = await mongoose.connect(`mongodb://ec2-18-217-126-196.us-east-2.compute.amazonaws.com /sdc_merged`, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useFindAndModify: true,

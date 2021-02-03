@@ -27,14 +27,14 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.get('/', (req, res) => {
-  res.send('Hello from api');
+  res.send('Hello from api!!!!!');
 });
 
 //reviews endpoints
 app.get('/reviews/', (req, res) => {
   getReviews(req.query, (err, data) => {
     if (err) {
-      res.status(400).send('error getting data from db');
+      res.status(400).send(err);
     } else {
       res.status(200).send(data);
     }
