@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const redis = require('redis');
 const util = require('util');
 
-const client = redis.createClient();
+const client = redis.createClient({
+  host: '18.217.126.196'
+});
 client.hget = util.promisify(client.hget);
 
 // create reference for .exec
