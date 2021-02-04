@@ -6,12 +6,13 @@ const {
   charsMetaModel,
   allRatingsModel
 } = require('./models.js');
+const redis = require("../utils/redis.js");
 
 
 connectDB('sdc_merged');
 
-module.exports.getReviews = async ({ product_id, page = 1, count = 5, sort = 'relevance'}, callback) => {
-  reviewsModel.find({ product_id: product_id }).select().lean()
+module.exports.getReviews = ({ product_id, page = 1, count = 5, sort = 'relevance'}, callback) => {
+  reviewsModel.find({ product_id: product_id }).cache().select().lean()
     .then((arr) => {
       arr = modifyReviews(arr, page, count, sort);
       let nonreported = [];
@@ -37,7 +38,7 @@ module.exports.getMeta = function (product_id = '12027', callback) {
   let chars;
   let returnObject;
   Promise.all([
-  charsMetaModel.find({ product_id: product_id }).select().lean().exec()
+  charsMetaModel.find({ product_id: product_id }).cache().select().lean().exec()
   .then((arr) => {
     let char_obj = {};
     for (let x = 0; x < arr.length; x++) {
@@ -67,7 +68,7 @@ module.exports.getMeta = function (product_id = '12027', callback) {
   })
     .catch((err) => {
       return err;
-    }), reviewsModel.find({ product_id: product_id }).select().lean().exec()
+    }), reviewsModel.find({ product_id: product_id }).cache().select().lean().exec()
       .then((arr) => {
         if (arr) {
           let ratings = {};
