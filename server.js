@@ -87,7 +87,7 @@ addReport(req.params.review_id, (err, data) => {
 app.use('/products', productsRoutes);
 // app.use('/reviews', reviews);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
