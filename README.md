@@ -21,7 +21,6 @@
     <td>
       <img alt="Docker" src="https://img.shields.io/badge/-docker-2496ED?&style=for-the-badge&logo=docker&logoColor=white"/>
       <img alt="AWS" src="https://img.shields.io/badge/AWS%20-%23FF9900.svg?&style=for-the-badge&logo=amazon-aws&logoColor=white"/>
-      <img alt="Heroku" src="https://img.shields.io/badge/AWS%20-%23FF9900.svg?&style=for-the-badge&logo=amazon-aws&logoColor=white"/>
     </td>
   </tr>
   <tr>
